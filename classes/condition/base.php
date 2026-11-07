@@ -115,6 +115,16 @@ abstract class base {
     }
 
     /**
+     * Short text that describes a configured condition in the condition editor.
+     *
+     * @param array $config
+     * @return string Plain text or HTML already formatted for display.
+     */
+    public function get_summary(array $config): string {
+        return $this->get_description($config, false);
+    }
+
+    /**
      * Identifier of the condition type, stored in the condition trees.
      *
      * For a subplugin it is the subplugin name without the enrolcond_ prefix. Conditions provided
