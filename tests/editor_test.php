@@ -111,6 +111,43 @@ final class editor_test extends \advanced_testcase {
         new condition_config(null, null, 'post', '', [], true, $formdata, true);
     }
 
+    /**
+     * Editor configuration rendered by add_to_form().
+     *
+     * @param string|null $saved Saved tree.
+     * @return array Decoded data-config of the editor.
+     */
+    protected function render_editor_config(?string $saved): array {
+        global $PAGE;
+        $course = $this->getDataGenerator()->create_course();
+        $PAGE->set_url('/enrol/instances.php', ['id' => $course->id]);
+        $mform = new \MoodleQuickForm('test', 'post', '');
+        tree_editor::add_to_form($mform, 'customtext2', 'Conditions', \context_course::instance($course->id), $saved);
+        $html = $mform->getElement('customtext2_editor')->toHtml();
+        $this->assertSame(1, preg_match('/data-config="([^"]*)"/', $html, $matches));
+        return json_decode(html_entity_decode($matches[1], ENT_QUOTES), true);
+    }
+
+    public function test_add_to_form_uses_saved_tree(): void {
+        $saved = json_encode(['op' => 'and', 'children' => [['type' => 'fake', 'config' => ['userids' => [1]]]]]);
+        $config = $this->render_editor_config($saved);
+        $this->assertSame([1], $config['tree']['children'][0]['config']['userids']);
+    }
+
+    public function test_add_to_form_keeps_submitted_tree(): void {
+        $saved = json_encode(['op' => 'and', 'children' => [['type' => 'fake', 'config' => ['userids' => [1]]]]]);
+        $_POST = ['customtext2' => json_encode(['op' => 'or', 'children' => [['type' => 'fake', 'config' => ['userids' => [2]]]]])];
+        $config = $this->render_editor_config($saved);
+        $this->assertSame('or', $config['tree']['op']);
+        $this->assertSame([2], $config['tree']['children'][0]['config']['userids']);
+
+        // An invalid submitted tree falls back to the saved one.
+        $_POST = ['customtext2' => '{"op":"xor"}'];
+        $config = $this->render_editor_config($saved);
+        $this->assertSame([1], $config['tree']['children'][0]['config']['userids']);
+        $_POST = [];
+    }
+
     public function test_editor_export(): void {
         global $PAGE;
         $course = $this->getDataGenerator()->create_course();

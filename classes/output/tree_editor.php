@@ -68,11 +68,14 @@ class tree_editor implements renderable, templatable {
      * The value of the field is the JSON of the tree (escaped by tree::JSON_FLAGS, so PARAM_NOTAGS keeps it).
      * Without JavaScript the editor shows a message and the field keeps its value.
      *
+     * When the form comes back with validation errors, the editor shows the tree that was submitted, so
+     * the changes are not lost; if that tree is not valid, it shows the saved one.
+     *
      * @param MoodleQuickForm $mform
      * @param string $fieldname Name of the hidden field.
      * @param string $label Label shown next to the editor.
      * @param context $context Course context.
-     * @param string|null $json Current value.
+     * @param string|null $json Saved value.
      */
     public static function add_to_form(
         MoodleQuickForm $mform,
@@ -83,10 +86,19 @@ class tree_editor implements renderable, templatable {
     ): void {
         global $OUTPUT, $PAGE;
 
-        try {
-            $tree = tree::from_json($json);
-        } catch (\local_enrolconditions\invalid_tree_exception $e) {
-            $tree = tree::empty();
+        $candidates = [$json];
+        $submitted = optional_param($fieldname, null, PARAM_NOTAGS);
+        if ($submitted !== null && data_submitted()) {
+            array_unshift($candidates, $submitted);
+        }
+        $tree = tree::empty();
+        foreach ($candidates as $candidate) {
+            try {
+                $tree = tree::from_json($candidate);
+                break;
+            } catch (\local_enrolconditions\invalid_tree_exception $e) {
+                continue;
+            }
         }
         $editor = new self($tree, $fieldname, $context);
         $mform->addElement('hidden', $fieldname);
