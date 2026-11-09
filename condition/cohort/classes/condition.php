@@ -119,6 +119,12 @@ class condition extends \local_enrolconditions\condition\base {
     }
 
     #[\Override]
+    public function restore_config(array $config, bool $samesite): array {
+        // Cohorts are not in course backups: from another site the condition fails until it is edited.
+        return $samesite ? $config : ['cohortid' => 0];
+    }
+
+    #[\Override]
     public function get_observed_events(): array {
         return [
             \core\event\cohort_member_added::class,

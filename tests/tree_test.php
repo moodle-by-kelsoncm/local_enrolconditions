@@ -219,4 +219,25 @@ final class tree_test extends \advanced_testcase {
         $this->assertEqualsCanonicalizing(['fake', 'missing'], $tree->get_types());
         $this->assertSame([\core\event\user_updated::class], $tree->get_observed_events());
     }
+
+    public function test_for_restore(): void {
+        $this->resetAfterTest();
+        $tree = tree::from_array(['op' => 'and', 'children' => [
+            ['type' => 'cohort', 'config' => ['cohortid' => 5]],
+            ['op' => 'or', 'negate' => true, 'children' => [
+                ['type' => 'coursecompleted', 'config' => ['courseid' => 7]],
+                ['type' => 'missing', 'config' => ['x' => 1]],
+                ['type' => 'fake', 'config' => ['userids' => [3]]],
+            ]],
+        ]]);
+
+        $this->assertSame($tree->to_array(), $tree->for_restore(true)->to_array());
+
+        $other = $tree->for_restore(false)->to_array();
+        $this->assertSame(['cohortid' => 0], $other['children'][0]['config']);
+        $this->assertTrue($other['children'][1]['negate']);
+        $this->assertSame(['courseid' => 0], $other['children'][1]['children'][0]['config']);
+        $this->assertSame(['x' => 1], $other['children'][1]['children'][1]['config']);
+        $this->assertSame(['userids' => [3]], $other['children'][1]['children'][2]['config']);
+    }
 }

@@ -115,6 +115,20 @@ abstract class base {
     }
 
     /**
+     * Configuration to use in a course restored from a backup.
+     *
+     * Override when the configuration refers to records that the backup does not carry (cohorts, other
+     * courses): from another site, make the condition fail instead of pointing to an unrelated record.
+     *
+     * @param array $config Configuration in the backup.
+     * @param bool $samesite Whether the backup comes from this site.
+     * @return array
+     */
+    public function restore_config(array $config, bool $samesite): array {
+        return $config;
+    }
+
+    /**
      * Short text that describes a configured condition in the condition editor.
      *
      * @param array $config

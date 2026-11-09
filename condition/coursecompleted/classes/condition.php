@@ -81,6 +81,12 @@ class condition extends \local_enrolconditions\condition\base {
     }
 
     #[\Override]
+    public function restore_config(array $config, bool $samesite): array {
+        // Course ids of another site mean nothing here: the condition fails until it is edited.
+        return $samesite ? $config : ['courseid' => 0];
+    }
+
+    #[\Override]
     public function get_observed_events(): array {
         return [\core\event\course_completed::class];
     }

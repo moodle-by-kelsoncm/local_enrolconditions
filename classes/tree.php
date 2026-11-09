@@ -355,6 +355,42 @@ class tree {
     }
 
     /**
+     * Copy of the tree with the configurations adapted for a restored course.
+     *
+     * Each condition decides through base::restore_config(); unknown types are kept as they are.
+     *
+     * @param bool $samesite Whether the backup comes from this site.
+     * @return self
+     */
+    public function for_restore(bool $samesite): self {
+        return new self(self::map_conditions($this->root, function (array $node) use ($samesite): array {
+            $condition = manager::get_condition($node['type']);
+            if ($condition) {
+                $node['config'] = $condition->restore_config($node['config'] ?? [], $samesite);
+            }
+            return $node;
+        }));
+    }
+
+    /**
+     * Applies a function to every condition node, keeping the groups.
+     *
+     * @param array $node
+     * @param callable $callback Receives a condition node and returns it changed.
+     * @return array
+     */
+    protected static function map_conditions(array $node, callable $callback): array {
+        if (isset($node['type'])) {
+            return $callback($node);
+        }
+        $node['children'] = array_map(
+            fn(array $child): array => self::map_conditions($child, $callback),
+            $node['children'] ?? []
+        );
+        return $node;
+    }
+
+    /**
      * Calls a function for every node, depth first.
      *
      * @param array $node
