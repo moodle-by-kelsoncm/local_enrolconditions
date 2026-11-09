@@ -164,7 +164,8 @@ final class editor_test extends \advanced_testcase {
 
         $this->assertSame('customtext2', $config['fieldname']);
         $this->assertSame($context->id, $config['contextid']);
-        $this->assertSame([['type' => 'fake', 'name' => 'Fake condition']], $config['types']);
+        $this->assertContains(['type' => 'fake', 'name' => 'Fake condition'], $config['types']);
+        $this->assertContains(['type' => 'cohort', 'name' => 'Cohort'], $config['types']);
         $this->assertSame('Not a listed user', $config['tree']['children'][0]['summary']);
         $this->assertTrue($config['tree']['children'][0]['known']);
         $this->assertFalse($config['tree']['children'][1]['known']);
