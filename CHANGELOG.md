@@ -2,7 +2,7 @@
 
 All notable changes to the Enrolment conditions plugin will be documented in this file.
 
-## 0.1.0 - Unreleased
+## 1.0.0 - 2026-11-09
 
 ### Added
 - Subplugin type `enrolcond` (folder `condition/`) with plugin info, enable/disable and settings pages.
