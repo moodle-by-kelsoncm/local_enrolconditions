@@ -1,0 +1,34 @@
+{{!
+    This file is part of Moodle - https://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+}}
+{{!
+    @template local_enrolconditions/tree_editor
+
+    Container of the condition tree editor, filled by the AMD module local_enrolconditions/tree_editor.
+
+    Context variables required for this template:
+    * uniqid - Id of the container.
+    * config - JSON with the field name, context id, condition types and the tree.
+
+    Example context (json):
+    {
+        "uniqid": "local_enrolconditions_editor1",
+        "config": "{}"
+    }
+}}
+<div id="{{uniqid}}" class="local_enrolconditions-editor w-100" data-region="local_enrolconditions-editor" data-config="{{config}}">
+    <p class="text-muted" data-region="local_enrolconditions-noscript">{{#str}}editornoscript, local_enrolconditions{{/str}}</p>
+</div>

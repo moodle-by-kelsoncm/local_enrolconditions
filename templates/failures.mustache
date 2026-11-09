@@ -1,0 +1,41 @@
+{{!
+    This file is part of Moodle - https://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+}}
+{{!
+    @template local_enrolconditions/failures
+
+    Conditions that the user does not meet.
+
+    Context variables required for this template:
+    * intro - Text shown before the list.
+    * items - List of items, each with message (HTML formatted by the condition), haschildren and items.
+
+    Example context (json):
+    {
+        "intro": "You cannot enrol yourself in this course because:",
+        "items": [
+            {"message": "Your city must be Natal.", "haschildren": false, "items": []},
+            {"message": "You must meet at least one of the following:", "haschildren": true, "items": [
+                {"message": "You must be a member of cohort A.", "haschildren": false, "items": []},
+                {"message": "You must have completed Course 0.", "haschildren": false, "items": []}
+            ]}
+        ]
+    }
+}}
+<div class="local_enrolconditions-failures" data-region="local_enrolconditions-failures">
+    <p class="mb-1">{{intro}}</p>
+    {{> local_enrolconditions/failures_list }}
+</div>
