@@ -107,7 +107,7 @@ class condition_config extends \core_form\dynamic_form {
     public function set_data_for_dynamic_submission(): void {
         $condition = $this->get_condition();
         $config = $this->get_current_config();
-        $data = $condition->config_to_form_data($config);
+        $data = $condition->config_to_form_data_in_context($config, $this->get_context_for_dynamic_submission());
         $data[self::FIELD_CONTEXT] = $this->get_context_for_dynamic_submission()->id;
         $data[self::FIELD_TYPE] = $condition->get_type();
         $data[self::FIELD_CONFIG] = json_encode($config, tree::JSON_FLAGS);
@@ -117,7 +117,12 @@ class condition_config extends \core_form\dynamic_form {
     #[\Override]
     public function process_dynamic_submission(): array {
         $condition = $this->get_condition();
-        $config = $condition->config_from_form_data($this->get_data());
+        $data = $this->get_data();
+        $config = $condition->config_after_submission(
+            $condition->config_from_form_data($data),
+            $data,
+            $this->get_context_for_dynamic_submission()
+        );
         return [
             'config' => json_encode($config, tree::JSON_FLAGS),
             'summary' => $condition->get_summary($config),

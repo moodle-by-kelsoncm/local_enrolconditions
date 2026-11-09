@@ -91,6 +91,34 @@ abstract class base {
     }
 
     /**
+     * Form data for a configuration, in the context of the course being edited.
+     *
+     * Override when the form needs the context, for example to prepare a draft file area.
+     *
+     * @param array $config
+     * @param \context $context Course context.
+     * @return array
+     */
+    public function config_to_form_data_in_context(array $config, \context $context): array {
+        return $this->config_to_form_data($config);
+    }
+
+    /**
+     * Final configuration after the form was submitted and validated.
+     *
+     * Called once, when the condition form is saved (not during validation). Override to persist data
+     * outside the configuration, for example files.
+     *
+     * @param array $config Result of config_from_form_data().
+     * @param stdClass $data Submitted form data.
+     * @param \context $context Course context.
+     * @return array
+     */
+    public function config_after_submission(array $config, stdClass $data, \context $context): array {
+        return $config;
+    }
+
+    /**
      * Form validation of the configuration fields.
      *
      * @param array $data Submitted data.

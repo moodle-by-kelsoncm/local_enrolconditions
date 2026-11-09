@@ -281,7 +281,14 @@ class tree {
             $failures[] = ['message' => get_string('failureunknown', 'local_enrolconditions'), 'children' => []];
             return null;
         }
-        $met = $condition->is_met($userid, $instance, $node['config']);
+        try {
+            $met = $condition->is_met($userid, $instance, $node['config']);
+        } catch (\Throwable $e) {
+            // A failing condition (for example, a broken query) is unknown: it never suspends anybody.
+            debugging("Condition '{$node['type']}' failed: " . $e->getMessage(), DEBUG_DEVELOPER);
+            $failures[] = ['message' => get_string('failureunknown', 'local_enrolconditions'), 'children' => []];
+            return null;
+        }
         $value = $node['negate'] ? !$met : $met;
         if (!$value) {
             $message = $node['negate']
