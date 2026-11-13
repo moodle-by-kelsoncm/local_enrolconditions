@@ -41,6 +41,22 @@ Instalação: copie este repositório para `public/local/enrolconditions` e aces
 
 Para criar uma condição, estenda `\local_enrolconditions\condition\base` (veja *Writing a condition* acima), como subplugin em `condition/<nome>` ou registrando-a pelo hook `collect_conditions` a partir de qualquer plugin.
 
+## Screenshots / Capturas de tela
+
+Conditions in the enrolment method form (`enrol_conditional`) / Condições no formulário do método de inscrição:
+
+![Condition editor / Editor de condições](docs/img/course-conditions-editor.png)
+
+![Adding a User profile condition / Adicionando uma condição de perfil](docs/img/condition-profile.png)
+
+Condition types in the site administration / Tipos de condição na administração do site:
+
+![Manage conditions](docs/img/admin-manageconditions.png)
+
+Lists defined by the administrator for *List from a query* / Listas definidas pelo administrador:
+
+![List from a query](docs/img/admin-querylists.png)
+
 ## Why a local plugin / Por que um plugin local
 
 Moodle only accepts subplugins under `mod`, `editor`, `tool` and `local` plugins (`core_component::$supportsubplugins`), so the enrolment method cannot declare them itself. / O Moodle só aceita subplugins em plugins `mod`, `editor`, `tool` e `local`, então o método de inscrição não pode declará-los.

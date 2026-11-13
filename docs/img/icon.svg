@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <rect width="512" height="512" rx="96" fill="#1d4e89"/>
+  <g stroke="#ffffff" stroke-width="16" stroke-linecap="round" fill="none" opacity="0.9">
+    <path d="M256 150 V210 M256 210 H152 V262 M256 210 H360 V262"/>
+    <path d="M360 318 V350 M360 350 H296 V378 M360 350 H424 V378"/>
+  </g>
+  <rect x="196" y="86" width="120" height="64" rx="18" fill="#ffd166"/>
+  <text x="256" y="130" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" fill="#1d4e89" text-anchor="middle">AND</text>
+  <rect x="96" y="262" width="112" height="64" rx="18" fill="#ffffff"/>
+  <path d="M128 294 l16 16 l30 -34" stroke="#1d4e89" stroke-width="12" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="304" y="262" width="112" height="56" rx="18" fill="#ffd166"/>
+  <text x="360" y="301" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" fill="#1d4e89" text-anchor="middle">OR</text>
+  <circle cx="296" cy="404" r="28" fill="#ffffff"/>
+  <circle cx="424" cy="404" r="28" fill="#ffffff"/>
+</svg>
