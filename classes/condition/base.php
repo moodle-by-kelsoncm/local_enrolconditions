@@ -132,9 +132,9 @@ abstract class base {
     /**
      * Events that may change the result of the condition for a user.
      *
-     * The plugin that provides the condition must also declare these events in its own db/events.php,
-     * pointing to the observer of the plugin that evaluates the conditions (for enrol_conditional,
-     * \enrol_conditional\observer::condition_event); Moodle does not register observers at run time.
+     * The plugin that evaluates the conditions observes the events itself: enrol_conditional observes
+     * every event ('*') and checks the user of the event, so the plugin that provides the condition
+     * does not need a db/events.php for them.
      *
      * @return string[] Fully qualified event class names.
      */

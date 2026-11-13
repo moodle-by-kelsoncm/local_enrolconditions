@@ -4,7 +4,7 @@
 
 [English](#english) · [Português (Brasil)](#português-brasil)
 
-Documentation / Documentação: <https://moodle-by-kelsoncm.github.io/enrol_conditional/>
+Documentation / Documentação: <https://moodle-by-kelsoncm.github.io/local_enrolconditions/> (conditions engine / motor de condições) and / e <https://moodle-by-kelsoncm.github.io/enrol_conditional/> (enrolment method / método de inscrição)
 
 ## English
 
