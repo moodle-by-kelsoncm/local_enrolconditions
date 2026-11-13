@@ -1,3 +1,5 @@
+<img src="docs/img/icon.svg" alt="Enrolment conditions" width="96" align="right">
+
 # moodle-local_enrolconditions
 
 [English](#english) · [Português (Brasil)](#português-brasil)
